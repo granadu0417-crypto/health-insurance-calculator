@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>건강보험료 계산기 - 2025년 최신 보험료율 적용</title>
+    <meta name="description" content="직장가입자 건강보험료 자동 계산기. 2025년 10월 최신 보험료율 7.09% 적용. 장기요양보험료 포함 정확한 계산.">
+    <meta name="keywords" content="건강보험료, 건강보험료계산기, 직장가입자, 장기요양보험료, 보험료율, 2025">
+    <meta property="og:title" content="건강보험료 계산기 - 2025년 최신">
+    <meta property="og:description" content="직장가입자 건강보험료 자동 계산. 장기요양보험료 포함. 2025년 최신 보험료율 적용">
+    <meta property="og:type" content="website">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+        }
+        h1 {
+            font-size: 2.2em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+        nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        nav a {
+            padding: 12px 20px;
+            background: #f0f0f0;
+            color: #333;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        nav a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .info-box {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            border-left: 4px solid #667eea;
+        }
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .info-box p {
+            color: #555;
+            line-height: 1.6;
+            margin: 5px 0;
+        }
+        .rate-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+        .rate-info strong {
+            color: #1976d2;
+        }
+        .calc-group {
+            margin-bottom: 25px;
+        }
+        .calc-label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border 0.3s;
+        }
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .hint {
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 5px;
+        }
+        .calc-button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .calc-button:hover {
+            transform: translateY(-2px);
+        }
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            display: none;
+        }
+        .result.show {
+            display: block;
+        }
+        .result h3 {
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        .result-value {
+            font-weight: 700;
+            font-size: 1.2em;
+        }
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+        .warning strong {
+            color: #856404;
+        }
+        footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #666;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            h1 { font-size: 1.6em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 건강보험료 계산기</h1>
+            <p class="subtitle">2025년 10월 최신 보험료율 적용 · 직장가입자</p>
+        </header>
+
+        <nav>
+            <a href="index.html">💼 직장가입자</a>
+            <a href="regional.html">🏘️ 지역가입자</a>
+            <a href="dependent.html">👨‍👩‍👧 피부양자</a>
+            <a href="long-term-care.html">🏥 장기요양</a>
+            <a href="insurance-guide.html">📖 보험 가이드</a>
+        </nav>
+
+        <div class="info-box">
+            <h3>📌 직장가입자 건강보험료란?</h3>
+            <p><strong>대상:</strong> 직장에 다니는 근로자 및 사용자</p>
+            <p><strong>보수월액:</strong> 기본급 + 각종 수당 (비과세 제외)</p>
+            <p><strong>부담:</strong> 본인 50%, 사업주 50%</p>
+        </div>
+
+        <div class="rate-info">
+            <strong>📊 2025년 건강보험료율</strong><br>
+            • 건강보험료율: <strong>7.09%</strong> (본인 부담 3.545%)<br>
+            • 장기요양보험료율: 건강보험료의 <strong>12.95%</strong><br>
+            <small style="color: #666;">※ 최신 보험료율은 국민건강보험공단 공식 홈페이지에서 확인하세요</small>
+        </div>
+
+        <div class="calc-group">
+            <label class="calc-label">💰 월 급여 (만원)</label>
+            <input type="number" id="salary" placeholder="예: 300">
+            <div class="hint">💡 세전 급여 (기본급 + 수당)를 입력하세요</div>
+        </div>
+
+        <div class="calc-group">
+            <label class="calc-label">🎁 비과세 수당 (만원)</label>
+            <input type="number" id="taxFree" placeholder="예: 10 (식대, 차량유지비 등)" value="0">
+            <div class="hint">💡 식대(월 10만원), 자가운전보조금(월 20만원) 등</div>
+        </div>
+
+        <button class="calc-button" onclick="calculate()">💊 건강보험료 계산하기</button>
+
+        <div id="result" class="result">
+            <h3>💳 계산 결과 (본인 부담)</h3>
+            <div class="result-item">
+                <span>보수월액</span>
+                <span class="result-value" id="baseAmount">-</span>
+            </div>
+            <div class="result-item">
+                <span>건강보험료 (3.545%)</span>
+                <span class="result-value" id="healthInsurance">-</span>
+            </div>
+            <div class="result-item">
+                <span>장기요양보험료 (12.95%)</span>
+                <span class="result-value" id="longTermCare">-</span>
+            </div>
+            <div class="result-item" style="border-top: 2px solid rgba(255,255,255,0.5); margin-top: 10px; padding-top: 15px;">
+                <span><strong>총 본인 부담액</strong></span>
+                <span class="result-value" id="totalAmount">-</span>
+            </div>
+            <div class="result-item">
+                <span>사업주 부담액</span>
+                <span class="result-value" id="employerAmount">-</span>
+            </div>
+            <div class="result-item">
+                <span>실수령액 (예상)</span>
+                <span class="result-value" id="netSalary">-</span>
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ 안내사항</strong>
+            <p>• 본 계산기는 참고용이며, 실제 보험료는 개인의 보수월액에 따라 다를 수 있습니다.</p>
+            <p>• 정확한 보험료는 국민건강보험공단 (☎ 1577-1000) 또는 홈페이지에서 확인하세요.</p>
+            <p>• 2025년 10월 기준 보험료율이 적용되었습니다.</p>
+        </div>
+
+        <footer>
+            <p>💡 더 많은 정보: <a href="regional.html">지역가입자</a> | <a href="dependent.html">피부양자</a> | <a href="insurance-guide.html">보험 가이드</a></p>
+            <p>© 2025 건강보험료 계산기 | 정보 출처: 국민건강보험공단</p>
+        </footer>
+    </div>
+
+    <script>
+        function formatNumber(num) {
+            return Math.round(num).toLocaleString('ko-KR') + '원';
+        }
+
+        function calculate() {
+            const monthlySalary = parseFloat(document.getElementById('salary').value) * 10000;
+            const taxFree = parseFloat(document.getElementById('taxFree').value || 0) * 10000;
+
+            if (!monthlySalary) {
+                alert('월 급여를 입력해주세요!');
+                return;
+            }
+
+            // 보수월액 = 총 급여 - 비과세
+            const baseAmount = monthlySalary - taxFree;
+
+            // 2025년 보험료율
+            const healthInsuranceRate = 0.0709;  // 7.09%
+            const employeeRate = 0.03545;        // 본인 부담 3.545%
+            const longTermCareRate = 0.1295;     // 장기요양 12.95%
+
+            // 건강보험료 (본인 부담)
+            const healthInsurance = baseAmount * employeeRate;
+
+            // 장기요양보험료 (본인 부담)
+            const longTermCare = healthInsurance * longTermCareRate;
+
+            // 총 본인 부담액
+            const totalAmount = healthInsurance + longTermCare;
+
+            // 사업주 부담액 (동일)
+            const employerAmount = totalAmount;
+
+            // 실수령액 (간단 계산: 급여 - 건강보험료 - 국민연금 9% - 고용보험 0.9% - 소득세 약 5%)
+            const nationalPension = baseAmount * 0.045;  // 국민연금 4.5% (본인)
+            const employmentInsurance = baseAmount * 0.009;  // 고용보험 0.9%
+            const incomeTax = monthlySalary * 0.05;  // 소득세 약 5% (간략 계산)
+            const netSalary = monthlySalary - totalAmount - nationalPension - employmentInsurance - incomeTax;
+
+            // 결과 표시
+            document.getElementById('baseAmount').textContent = formatNumber(baseAmount);
+            document.getElementById('healthInsurance').textContent = formatNumber(healthInsurance);
+            document.getElementById('longTermCare').textContent = formatNumber(longTermCare);
+            document.getElementById('totalAmount').textContent = formatNumber(totalAmount);
+            document.getElementById('employerAmount').textContent = formatNumber(employerAmount);
+            document.getElementById('netSalary').textContent = formatNumber(netSalary);
+            document.getElementById('result').classList.add('show');
+        }
+    </script>
+</body>
+</html>

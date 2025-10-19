@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>지역가입자 건강보험료 계산기 - 2025년 최신</title>
+    <meta name="description" content="지역가입자 건강보험료 계산기. 소득·재산 점수제 기반 보험료 계산. 2025년 10월 최신 기준.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 3px solid #667eea; }
+        h1 { font-size: 2.2em; color: #333; margin-bottom: 10px; }
+        nav { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+        nav a { padding: 12px 20px; background: #f0f0f0; color: #333; text-decoration: none; border-radius: 8px; transition: all 0.3s; }
+        nav a:hover { background: #667eea; color: white; }
+        .info-box { background: #f8f9ff; padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .warning-box { background: #fff3cd; border-left: 4px solid #ffc107; padding: 20px; margin-bottom: 30px; border-radius: 10px; }
+        .calc-group { margin-bottom: 25px; }
+        .calc-label { display: block; font-weight: 600; margin-bottom: 8px; }
+        input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; }
+        .hint { font-size: 0.9em; color: #888; margin-top: 5px; }
+        .calc-button { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 1.1em; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; display: none; }
+        .result.show { display: block; }
+        .result-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.3); }
+        .result-value { font-weight: 700; font-size: 1.2em; }
+        ul { margin-left: 20px; line-height: 1.8; }
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        table th, table td { border: 1px solid #ddd; padding: 12px; text-align: center; }
+        table th { background: #667eea; color: white; }
+        footer { margin-top: 40px; text-align: center; color: #666; }
+        footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏘️ 지역가입자 건강보험료</h1>
+        </header>
+
+        <nav>
+            <a href="index.html">💼 직장가입자</a>
+            <a href="regional.html">🏘️ 지역가입자</a>
+            <a href="dependent.html">👨‍👩‍👧 피부양자</a>
+            <a href="long-term-care.html">🏥 장기요양</a>
+            <a href="insurance-guide.html">📖 보험 가이드</a>
+        </nav>
+
+        <div class="info-box">
+            <h3>📌 지역가입자란?</h3>
+            <p><strong>대상:</strong> 직장가입자가 아닌 모든 국민 (자영업자, 프리랜서, 무직자 등)</p>
+            <p><strong>보험료 산정:</strong> 소득 + 재산 + 자동차를 점수화하여 계산</p>
+            <p><strong>특징:</strong> 세대 단위로 부과</p>
+        </div>
+
+        <div class="warning-box">
+            <h3 style="color: #856404; margin-bottom: 10px;">⚠️ 복잡한 계산 방식</h3>
+            <p style="color: #856404;">지역가입자는 소득·재산·자동차를 점수화하는 복잡한 계산 방식을 사용합니다.</p>
+            <p style="color: #856404; margin-top: 10px;"><strong>정확한 보험료는 국민건강보험공단에 문의하세요.</strong></p>
+        </div>
+
+        <div class="info-box">
+            <h3>📊 간편 계산기 (소득 기준)</h3>
+            <p>아래는 소득만 고려한 간단한 계산입니다. 실제 보험료는 재산과 자동차를 포함하여 계산됩니다.</p>
+        </div>
+
+        <div class="calc-group">
+            <label class="calc-label">💰 월 소득 (만원)</label>
+            <input type="number" id="monthlyIncome" placeholder="예: 200">
+            <div class="hint">💡 사업소득, 근로소득, 연금소득 등</div>
+        </div>
+
+        <div class="calc-group">
+            <label class="calc-label">🏠 재산 (백만원)</label>
+            <input type="number" id="property" placeholder="예: 300 (3억)" value="0">
+            <div class="hint">💡 주택, 토지, 건물 등 (대략적인 금액)</div>
+        </div>
+
+        <button class="calc-button" onclick="calculate()">💊 예상 보험료 계산 (참고용)</button>
+
+        <div id="result" class="result">
+            <h3>💳 예상 보험료 (참고용)</h3>
+            <div class="result-item">
+                <span>월 소득 기준 보험료</span>
+                <span class="result-value" id="incomeInsurance">-</span>
+            </div>
+            <div class="result-item">
+                <span>재산 기준 보험료 (예상)</span>
+                <span class="result-value" id="propertyInsurance">-</span>
+            </div>
+            <div class="result-item">
+                <span>장기요양보험료 (12.95%)</span>
+                <span class="result-value" id="longTermCare">-</span>
+            </div>
+            <div class="result-item" style="border-top: 2px solid rgba(255,255,255,0.5); margin-top: 10px; padding-top: 15px;">
+                <span><strong>총 예상 보험료</strong></span>
+                <span class="result-value" id="totalAmount">-</span>
+            </div>
+        </div>
+
+        <div class="info-box" style="margin-top: 30px;">
+            <h3>📊 보험료 산정 기준 (2025년)</h3>
+            <table>
+                <tr>
+                    <th>구분</th>
+                    <th>산정 방식</th>
+                    <th>비고</th>
+                </tr>
+                <tr>
+                    <td><strong>소득</strong></td>
+                    <td>연간 소득 점수화</td>
+                    <td>사업·근로·연금·기타소득</td>
+                </tr>
+                <tr>
+                    <td><strong>재산</strong></td>
+                    <td>시가표준액 점수화</td>
+                    <td>주택·토지·건물·전·월세 보증금</td>
+                </tr>
+                <tr>
+                    <td><strong>자동차</strong></td>
+                    <td>차량 가액 점수화</td>
+                    <td>1,600cc 초과 승용차</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="info-box">
+            <h3>💡 보험료 경감 제도</h3>
+            <ul>
+                <li><strong>65세 이상:</strong> 재산 과표 100만원 추가 공제</li>
+                <li><strong>장애인:</strong> 재산 과표 500만원 추가 공제</li>
+                <li><strong>농어촌 거주:</strong> 22% 경감</li>
+                <li><strong>생계곤란자:</strong> 최대 50% 경감</li>
+            </ul>
+        </div>
+
+        <div class="warning-box">
+            <h3 style="color: #856404; margin-bottom: 10px;">📞 정확한 보험료 확인 방법</h3>
+            <p style="color: #856404;"><strong>국민건강보험공단</strong></p>
+            <p style="color: #856404;">• 전화: 1577-1000</p>
+            <p style="color: #856404;">• 홈페이지: www.nhis.or.kr</p>
+            <p style="color: #856404;">• The건강보험 앱</p>
+        </div>
+
+        <footer>
+            <p>💡 더 많은 정보: <a href="index.html">직장가입자</a> | <a href="dependent.html">피부양자</a> | <a href="insurance-guide.html">보험 가이드</a></p>
+            <p>© 2025 건강보험료 계산기</p>
+        </footer>
+    </div>
+
+    <script>
+        function calculate() {
+            const monthlyIncome = parseFloat(document.getElementById('monthlyIncome').value) * 10000;
+            const property = parseFloat(document.getElementById('property').value || 0) * 1000000;
+
+            if (!monthlyIncome && !property) {
+                alert('소득 또는 재산 중 하나 이상을 입력해주세요!');
+                return;
+            }
+
+            // 간단 계산 (실제는 점수제)
+            // 소득 기준: 월 소득의 약 7% (직장가입자와 유사)
+            const incomeInsurance = monthlyIncome * 0.07;
+
+            // 재산 기준: 대략적인 계산 (재산의 연 0.5% 정도를 월로 환산)
+            const propertyInsurance = (property * 0.005) / 12;
+
+            // 총 건강보험료
+            const healthInsurance = incomeInsurance + propertyInsurance;
+
+            // 장기요양보험료 (12.95%)
+            const longTermCare = healthInsurance * 0.1295;
+
+            // 총 보험료
+            const totalAmount = healthInsurance + longTermCare;
+
+            document.getElementById('incomeInsurance').textContent = Math.round(incomeInsurance).toLocaleString('ko-KR') + '원';
+            document.getElementById('propertyInsurance').textContent = Math.round(propertyInsurance).toLocaleString('ko-KR') + '원';
+            document.getElementById('longTermCare').textContent = Math.round(longTermCare).toLocaleString('ko-KR') + '원';
+            document.getElementById('totalAmount').textContent = Math.round(totalAmount).toLocaleString('ko-KR') + '원';
+            document.getElementById('result').classList.add('show');
+        }
+    </script>
+</body>
+</html>

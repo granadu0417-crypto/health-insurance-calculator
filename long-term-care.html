@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장기요양보험료 계산기 - 2025년 12.95% 요율</title>
+    <meta name="description" content="장기요양보험료 자동 계산기. 2025년 12.95% 요율 적용. 건강보험료 기반 자동 계산.">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 20px; padding: 40px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        header { text-align: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 3px solid #667eea; }
+        h1 { font-size: 2.2em; color: #333; }
+        nav { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; justify-content: center; }
+        nav a { padding: 12px 20px; background: #f0f0f0; color: #333; text-decoration: none; border-radius: 8px; transition: all 0.3s; }
+        nav a:hover { background: #667eea; color: white; }
+        .info-box { background: #f8f9ff; padding: 20px; border-radius: 10px; margin-bottom: 30px; border-left: 4px solid #667eea; }
+        .rate-info { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #2196f3; }
+        .calc-group { margin-bottom: 25px; }
+        .calc-label { display: block; font-weight: 600; margin-bottom: 8px; }
+        input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1em; }
+        .hint { font-size: 0.9em; color: #888; margin-top: 5px; }
+        .calc-button { width: 100%; padding: 15px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none; border-radius: 10px; font-size: 1.1em; font-weight: 600; cursor: pointer; }
+        .result { margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 10px; display: none; }
+        .result.show { display: block; }
+        .result-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.3); }
+        .result-value { font-weight: 700; font-size: 1.2em; }
+        ul { margin-left: 20px; line-height: 1.8; }
+        footer { margin-top: 40px; text-align: center; color: #666; }
+        footer a { color: #667eea; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏥 장기요양보험료 계산기</h1>
+        </header>
+
+        <nav>
+            <a href="index.html">💼 직장가입자</a>
+            <a href="regional.html">🏘️ 지역가입자</a>
+            <a href="dependent.html">👨‍👩‍👧 피부양자</a>
+            <a href="long-term-care.html">🏥 장기요양</a>
+            <a href="insurance-guide.html">📖 보험 가이드</a>
+        </nav>
+
+        <div class="info-box">
+            <h3>📌 장기요양보험이란?</h3>
+            <p><strong>목적:</strong> 고령이나 노인성 질병으로 일상생활이 어려운 분들에게 신체활동 및 일상생활 지원 서비스 제공</p>
+            <p><strong>대상:</strong> 만 65세 이상 또는 노인성 질병(치매, 뇌혈관질환 등)을 가진 만 65세 미만</p>
+            <p><strong>보험료:</strong> 건강보험료에 추가로 부과</p>
+        </div>
+
+        <div class="rate-info">
+            <strong>📊 2025년 장기요양보험료율</strong><br>
+            • <strong>12.95%</strong> (건강보험료의 12.95%)<br>
+            • 건강보험료와 함께 납부<br>
+            <small style="color: #666;">※ 2025년 10월 기준</small>
+        </div>
+
+        <div class="calc-group">
+            <label class="calc-label">💊 월 건강보험료 (원)</label>
+            <input type="number" id="healthInsurance" placeholder="예: 100000 (10만원)">
+            <div class="hint">💡 매달 납부하는 건강보험료를 입력하세요</div>
+        </div>
+
+        <button class="calc-button" onclick="calculate()">🏥 장기요양보험료 계산하기</button>
+
+        <div id="result" class="result">
+            <h3>💳 계산 결과</h3>
+            <div class="result-item">
+                <span>건강보험료</span>
+                <span class="result-value" id="healthAmount">-</span>
+            </div>
+            <div class="result-item">
+                <span>장기요양보험료 (12.95%)</span>
+                <span class="result-value" id="longTermCare">-</span>
+            </div>
+            <div class="result-item" style="border-top: 2px solid rgba(255,255,255,0.5); margin-top: 10px; padding-top: 15px;">
+                <span><strong>총 납부액</strong></span>
+                <span class="result-value" id="totalAmount">-</span>
+            </div>
+        </div>
+
+        <div class="info-box" style="margin-top: 30px;">
+            <h3>🏥 장기요양보험 혜택</h3>
+            <ul>
+                <li><strong>재가급여:</strong> 방문요양, 방문목욕, 방문간호, 주·야간보호, 단기보호 등</li>
+                <li><strong>시설급여:</strong> 노인요양시설, 노인요양공동생활가정 입소</li>
+                <li><strong>특별현금급여:</strong> 가족요양비, 특례요양비, 요양병원간병비</li>
+            </ul>
+        </div>
+
+        <div class="info-box">
+            <h3>📋 장기요양 등급 인정 절차</h3>
+            <ol style="margin-left: 20px; line-height: 2;">
+                <li><strong>신청:</strong> 국민건강보험공단 지사 방문 또는 우편·팩스·인터넷</li>
+                <li><strong>방문조사:</strong> 공단 직원이 자택 방문하여 심신상태 조사</li>
+                <li><strong>등급판정:</strong> 장기요양등급판정위원회 심의</li>
+                <li><strong>결과통지:</strong> 신청일로부터 30일 이내 (최대 60일)</li>
+                <li><strong>서비스 이용:</strong> 장기요양기관 선택 후 서비스 이용</li>
+            </ol>
+        </div>
+
+        <div class="info-box">
+            <h3>📊 장기요양 등급 (2025년)</h3>
+            <table style="width: 100%; border-collapse: collapse; margin: 20px 0;">
+                <tr style="background: #667eea; color: white;">
+                    <th style="border: 1px solid #ddd; padding: 12px;">등급</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">심신상태</th>
+                    <th style="border: 1px solid #ddd; padding: 12px;">월 한도액</th>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;"><strong>1등급</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">최중증 (완전 의존)</td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">약 180만원</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;"><strong>2등급</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">중증 (상당 부분 의존)</td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">약 160만원</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;"><strong>3등급</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">중등도 (부분 의존)</td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">약 140만원</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;"><strong>4등급</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">경증 (부분 도움)</td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">약 130만원</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;"><strong>5등급</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">경증 (치매 특화)</td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">약 110만원</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;"><strong>인지지원등급</strong></td>
+                    <td style="border: 1px solid #ddd; padding: 12px;">경증 치매</td>
+                    <td style="border: 1px solid #ddd; padding: 12px; text-align: center;">약 60만원</td>
+                </tr>
+            </table>
+            <p style="color: #666; font-size: 0.9em;">※ 월 한도액은 재가급여 기준이며, 실제 이용 시 본인부담금(15~20%)이 있습니다.</p>
+        </div>
+
+        <div class="info-box">
+            <h3>📞 문의</h3>
+            <p><strong>국민건강보험공단 장기요양보험</strong></p>
+            <p>• 전화: 1577-1000</p>
+            <p>• 홈페이지: www.longtermcare.or.kr</p>
+        </div>
+
+        <footer>
+            <p>💡 더 많은 정보: <a href="index.html">건강보험료</a> | <a href="insurance-guide.html">보험 가이드</a></p>
+            <p>© 2025 건강보험료 계산기</p>
+        </footer>
+    </div>
+
+    <script>
+        function calculate() {
+            const healthInsurance = parseFloat(document.getElementById('healthInsurance').value);
+
+            if (!healthInsurance) {
+                alert('건강보험료를 입력해주세요!');
+                return;
+            }
+
+            // 2025년 장기요양보험료율: 12.95%
+            const longTermCareRate = 0.1295;
+            const longTermCare = healthInsurance * longTermCareRate;
+            const totalAmount = healthInsurance + longTermCare;
+
+            document.getElementById('healthAmount').textContent = Math.round(healthInsurance).toLocaleString('ko-KR') + '원';
+            document.getElementById('longTermCare').textContent = Math.round(longTermCare).toLocaleString('ko-KR') + '원';
+            document.getElementById('totalAmount').textContent = Math.round(totalAmount).toLocaleString('ko-KR') + '원';
+            document.getElementById('result').classList.add('show');
+        }
+    </script>
+</body>
+</html>
